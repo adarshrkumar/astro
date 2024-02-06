@@ -116,7 +116,9 @@ function astroDBIntegration(): AstroIntegration {
 				}, 100);
 			},
 			'astro:build:start': async ({ logger }) => {
-				logger.info('database: ' + (connectedToRemote ? yellow('remote') : blue('local database.')));
+				logger.info(
+					'database: ' + (connectedToRemote ? yellow('remote') : blue('local database.'))
+				);
 			},
 		},
 	};
@@ -126,8 +128,10 @@ function astroDBIntegration(): AstroIntegration {
  * We need to attach the Drizzle `table` and collection name at runtime.
  * These cannot be determined from `defineCollection()`,
  * since we don't know the collection name until the `db` config is resolved.
+ *
+ * exported for unit testing.
  */
-function setCollectionsMeta(collections: Record<string, any>) {
+export function setCollectionsMeta(collections: Record<string, any>) {
 	for (const [name, collection] of Object.entries(collections)) {
 		const table = collectionToTable(name, collection);
 		collection._setMeta?.({ table });
